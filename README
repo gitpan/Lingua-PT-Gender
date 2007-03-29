@@ -1,0 +1,51 @@
+NAME
+    Lingua::PT::Gender - Decides if a Portuguese proper name is male or
+    female
+
+SYNOPSIS
+      use Lingua::PT::Gender qw/ptbr_gender/;
+  
+      $result = ptbr_gender("Marco Carnut");
+      # $result now holds 1 meaning 'male'
+  
+      $result = ptbr_gender("Ana Paula");
+      # $result = now holds 0 meaning 'female'
+
+DESCRIPTION
+    This module provides a routine to decide whether a Portuguese name is
+    male or female. The algorithm examines a table of suffixes to determine
+    this.
+
+    The table was computed using a recursive space subdivision algorithm
+    operating on a database of about 60,000 proper names.
+
+    Typical accuracy is greater than 99%. This makes it useful to find
+    enrollment errors in databases.
+
+  ptbr_gender
+    This is the only function in this module. It returns 0 for female or 1
+    for male. Comparisons are case insensitive. It expects non-accented
+    letters; it is your responsibility to strip them beforehand. The routine
+    considers only the first name (word) on the string; all others are
+    ignored.
+
+    A simple filter that gets names from the standard input and prefixes
+    them with M or F accordingly:
+
+       #!/usr/bin/perl
+   
+       use Lingua::PT::Gender qw/ptbr_gender/; 
+
+       while (<>)
+       {
+           print ptbr_gender($_) ? "M" : "F";
+           print " $_";
+       }
+   
+LICENSE
+       GPL2 - http://www.gnu.org/licenses/gpl.txt
+
+AUTHOR
+       Marco "Kiko" Carnut <kiko at tempest.com.br>
+       http://www.postcogito.org/
+
